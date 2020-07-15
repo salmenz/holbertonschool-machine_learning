@@ -1,18 +1,15 @@
 #!/usr/bin/env python3
 '''Gettin’ Cozy'''
-from copy import deepcopy
 
 
 def cat_matrices2D(mat1, mat2, axis=0):
     """that concatenates two matrices along a specific axis"""
     m1 = []
     m2 = []
-    m1 = deepcopy(mat1)
-    m2 = deepcopy(mat2)
     if axis == 0:
-        return m1+m2
+        return mat1+mat2
     else:
-        for i in range(len(m1)):
+        for i in range(len(mat1)):
             for j in range(axis):
-                m1[i].append(m2[i][j])
-        return m1
+                mat1[i].append(mat2[i][j])
+        return mat1
