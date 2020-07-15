@@ -3,6 +3,7 @@
 
 
 def matrix_transpose(matrix):
+    """"return trabsposed matrix"""
     m = []
     for i in range(len(matrix[0])):
         l1 = []
