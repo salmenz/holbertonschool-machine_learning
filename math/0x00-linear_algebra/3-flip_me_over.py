@@ -2,8 +2,8 @@
 def matrix_transpose(matrix):
     m = []
     for i in range(len(matrix[0])):
-        l = []
+        l1 = []
         for arr in matrix:
-            l.append(arr[i])
-        m.append(l)
+            l1.append(arr[i])
+        m.append(l1)
     return m
