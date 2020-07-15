@@ -3,11 +3,13 @@
 
 
 def cat_matrices2D(mat1, mat2, axis=0):
+    m = []
     """that concatenates two matrices along a specific axis"""
-    if axis == 0:
-        return mat1+mat2
-    else:
+    if axis == 0 and len(mat1[0]) == len(mat2[0]):
+        m = mat1+mat2
+        return m
+    elif axis == 1 and len(mat1) == len(mat2):
         for i in range(len(mat1)):
-            for j in range(len(mat2[i])):
-                mat1[i].append(mat2[i][j])
+            l1 = mat1[i]+mat2[i]
+            m.append(l1)
         return mat1
