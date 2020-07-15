@@ -12,4 +12,5 @@ def mat_mul(mat1, mat2):
         return None
     a = np.array(mat1)
     b = np.array(mat2)
-    return np.matmul(a, b)
+    r = np.matmul(a, b)
+    return r.tolist()
