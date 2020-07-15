@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 '''The Western Exchange'''
-import numpy as np
 
 
 def np_transpose(matrix):
