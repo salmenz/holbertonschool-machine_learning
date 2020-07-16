@@ -4,6 +4,11 @@
 
 def mat_mul(mat1, mat2):
     """performs matrix multiplication"""
+    for l in mat1:
+        if len(l) != len(mat1[0]):
+            return None
+    if len(mat1[0]) != len(mat2):
+        return None
     m = []
     for i in range(len(mat2[0])):
         l1 = []
