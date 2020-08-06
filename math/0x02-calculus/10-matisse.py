@@ -14,7 +14,7 @@ def poly_derivative(poly):
     else:
         poly = poly[1:]
         for i in range(len(poly)):
-            if not isinstance(poly[i], int):
+            if not isinstance(poly[i], int) and poly[i] < 0:
                 return None
             else:
                 poly[i] *= i+1
