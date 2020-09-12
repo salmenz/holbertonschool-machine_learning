@@ -3,16 +3,17 @@
 
 
 class Poisson:
-    """class Poisson"""
+    """ Poisson distribution Class"""
     def __init__(self, data=None, lambtha=1.):
-        if not data:
+        self.data = data
+        if data is None:
             if lambtha <= 0:
                 raise ValueError("lambtha must be a positive value")
-            self.lambtha = float(lambtha)
+            else:
+                self.lambtha = float(lambtha)
         else:
-            if not isinstance(data, list):
+            if type(data) is not list:
                 raise TypeError("data must be a list")
-            if len(data) < 2:
+            if len(data) < 3:
                 raise ValueError("data must contain multiple values")
-            self.data = data
-            self.lambtha = sum(data)/len(data)
+            self.lambtha = sum(data) / len(data)
