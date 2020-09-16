@@ -40,4 +40,5 @@ class Neuron:
 
     def evaluate(self, X, Y):
         """evaluate the neuron's predection"""
-        return np.round(self.forward_prop(X)), self.cost(Y, self.forward_prop(X))
+        ev = np.round(self.forward_prop(X)).astype(int)
+        return ev, self.cost(Y, self.forward_prop(X))
