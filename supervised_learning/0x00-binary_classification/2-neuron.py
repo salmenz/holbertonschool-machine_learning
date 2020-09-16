@@ -2,7 +2,7 @@
 """class neuron"""
 import numpy as np
 
- 
+
 class Neuron:
     """class neuron"""
     def __init__(self, nx):
