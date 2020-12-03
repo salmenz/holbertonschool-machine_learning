@@ -20,8 +20,8 @@ def mat_mul(mat1, mat2):
         l1 = []
         for j in range(len(mat2[0])):
             p = []
-            for num1, num2 in zip(mat1[i], m[j]):
-                p.append(num1 * num2)
+            for k in range(len(mat1[i])):
+                p.append(mat1[i][k] * m[j][k])
             l1.append(sum(p))
         n.append(l1)
     return n
