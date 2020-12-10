@@ -1,4 +1,9 @@
+#!/usr/bin/env python3
+'''that calculates the integral of a polynomial'''
+
+
 def poly_integral(poly, C=0):
+    """that calculates the integral of a polynomial"""
     if type(C) != int:
         return None
     if poly == []:
