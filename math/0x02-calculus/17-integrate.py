@@ -6,7 +6,7 @@ def poly_integral(poly, C=0):
     """that calculates the integral of a polynomial"""
     if type(C) != int and type(C) != float:
         return None
-    if not poly:
+    if not poly or type(poly) != list:
         return None
     for i in poly:
         if type(i) != int:
