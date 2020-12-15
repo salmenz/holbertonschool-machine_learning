@@ -26,5 +26,5 @@ class Binomial:
                 v += (i - mean) ** 2
             v = v / len(data)
             p = 1 - (v / mean)
-            self.n = round(mean / p)
+            self.n = int(round(mean / p))
             self.p = mean / self.n
