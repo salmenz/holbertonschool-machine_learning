@@ -44,3 +44,13 @@ class Binomial:
         q = 1 - self.p
         w = self.fact(self.n) / (self.fact(self.n - k) * self.fact(k))
         return w * (self.p ** k) * (q ** (self.n - k))
+
+    def cdf(self, k):
+        """ cdf function """
+        p = 0
+        k = int(k)
+        if k < 0:
+            return 0
+        for i in range(k+1):
+            p = p + self.pmf(i)
+        return p
