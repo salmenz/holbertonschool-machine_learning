@@ -29,18 +29,18 @@ class Binomial:
             self.n = round(mean / p)
             self.p = mean / self.n
 
-    def fact(self,x):
+    def fact(self, x):
         """calculate factorial"""
         f = 1
         for i in range(1, x + 1):
             f *= i
         return f
- 
+
     def pmf(self, k):
         """calculate pmf"""
         k = int(k)
         if k < 0:
             return 0
-        q = 1 -self.p
+        q = 1 - self.p
         w = self.fact(self.n) / (self.fact(self.n - k) * self.fact(k))
-        return w * (self.p** k) * (q ** (self.n-k))
+        return w * (self.p ** k) * (q ** (self.n - k))
