@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""class Poisson that represents a poisson distribution"""
+"""class Exponential that represents an exponential distribution"""
 e = 2.7182818285
 
 
-class Poisson:
-    """class Poisson"""
+class Exponential:
+    """class exponential"""
     def __init__(self, data=None, lambtha=1.):
         self.data = data
         if data is None:
@@ -16,24 +16,16 @@ class Poisson:
                 raise TypeError("data must be a list")
             if len(data) < 3:
                 raise ValueError("data must contain multiple values")
-            self.lambtha = sum(data)/len(data)
+            self.lambtha = len(data)/sum(data)
 
-    def pmf(self, k):
-        """calcul pmf"""
-        k = int(k)
-        if k < 0:
+    def pdf(self, x):
+        """calcul pdf"""
+        if x < 0:
             return 0
-        fact = 1
-        for i in range(1, k + 1):
-            fact *= i
-        return e ** (-self.lambtha) * self.lambtha ** k / fact
+        return self.lambtha * (e ** (- self.lambtha * x))
 
-    def cdf(self, k):
+    def cdf(self, x):
         """calcul cdf"""
-        k = int(k)
-        if k < 0:
+        if x < 0:
             return 0
-        cdf = 0
-        for i in range(k + 1):
-            cdf += self.pmf(i)
-        return cdf
+        return 1 - e ** (- self.lambtha * x)
