@@ -46,5 +46,5 @@ class Neuron:
                 mat[0][i] = 1
             else:
                 mat[0][i] = 0
-        mat = mat.astype(np.int)
+        mat = mat.astype(int)
         return mat, self.cost(Y, self.forward_prop(X))
