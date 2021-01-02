@@ -40,5 +40,11 @@ class Neuron:
 
     def evaluate(self, X, Y):
         """evaluate the neuron's predection"""
-        ev = np.round(self.forward_prop(X)).astype(int)
-        return ev, self.cost(Y, self.forward_prop(X))
+        mat = self.forward_prop(X)
+        for i in range(len(mat[0])):
+            if mat[0][i] >= 0.5:
+                mat[0][i] = int(1)
+            else:
+                mat[0][i] = int(0)
+        mat = mat.astype(np.int)
+        return mat, self.cost(Y, self.forward_prop(X))
