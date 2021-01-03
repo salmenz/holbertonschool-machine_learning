@@ -53,17 +53,16 @@ class Neuron:
         self.__b = self.__b - np.sum(A - Y)/Y.shape[1] * alpha
 
     def train(self, X, Y, iterations=5000, alpha=0.05):
+        """train neuron"""
         if type(iterations) is not int:
             raise TypeError("iterations must be an integer")
-        if iterations <= 0:
+        if iterations < 1:
             raise ValueError("iterations must be a positive integer")
         if type(alpha) is not float:
             raise TypeError("alpha must be an float")
-        if alpha < 0:
+        if alpha <= 0:
             raise ValueError("alpha must be a positive")
-        A = self.forward_prop(X)
         for i in range(iterations):
-            self.gradient_descent(X, Y, A, alpha)
-            A = self.forward_prop(X)
-        self.__A = A
+            self.forward_prop(X)
+            self.gradient_descent(X, Y, self.__A, alpha)
         return self.evaluate(X, Y)
