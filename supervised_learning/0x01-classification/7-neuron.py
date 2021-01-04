@@ -82,11 +82,8 @@ class Neuron:
                     y.append(A)
         if graph:
             plt.plot(x, y)
-            plt.xlim([0, 3000])
-            plt.ylim([0, 4])
             plt.xlabel('iteration')
             plt.ylabel('cost')
             plt.title("Training Cost")
-            plt.margins(x=100, y=100)
             plt.show()
         return self.evaluate(X, Y)[0], y[len(y)-1]
