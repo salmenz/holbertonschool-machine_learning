@@ -26,5 +26,5 @@ class DeepNeuralNetwork:
             if i != 0:
                 self.weights['W' + str(i + 1)
                              ] = np.random.normal(layers[i], layers[i-1]) \
-                     * np.sqrt(2/(layers[i] + layers[i-1]))
+                     * np.sqrt(2/(layers[i-1]))
                 self.weights['b' + str(i + 1)] = np.zeros((layers[i], 1))
