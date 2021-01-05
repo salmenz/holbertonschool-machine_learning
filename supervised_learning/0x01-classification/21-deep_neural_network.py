@@ -65,13 +65,13 @@ class DeepNeuralNetwork:
         """Calculates one pass of gradient descent on the neural network"""
         m = Y.shape[1]
         weights = self.__weights
-        dz = cache['A' + str(self.L)] - Y
+        dz = self.cache['A' + str(self.L)] - Y
         for i in range(self.L, 0, -1):
-            dA = cache['A' + str(i - 1)] * (1 - cache['A' + str(i - 1)])
             dwn = np.matmul(dz, cache['A' + str(i - 1)].T) * 1 / m
             dbn = np.sum(dz, axis=1, keepdims=True) * 1 / m
             self.__weights['W' + str(i)] = self.__weights['W' + str(i)
                                                           ] - dwn * alpha
             self.__weights['b' + str(i)] = self.__weights['b' + str(i)
                                                           ] - dbn * alpha
+            dA = self.cache['A' + str(i - 1)] * (1 - self.cache['A'+str(i-1)])
             dz = np.matmul(weights['W' + str(i)].T, dz) * dA
