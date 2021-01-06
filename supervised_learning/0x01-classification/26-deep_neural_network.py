@@ -119,15 +119,15 @@ class DeepNeuralNetwork:
             return None
         if not(filename.endswith(".pkl")):
             filename = filename + ".pkl"
-        with open(filename, 'wb') as f:
-            return pickle.dump(self, f)
+        with open(filename, 'wb') as fileObject:
+            return pickle.dump(self, fileObject)
 
     @staticmethod
     def load(filename):
         """load pickle file"""
         try:
-            with open(filename, 'rb') as f:
-                r = pickle.load(f)
+            with open(filename, 'rb') as fileObject:
+                r = pickle.load(fileObject)
             return r
         except FileNotFoundError:
             return None
