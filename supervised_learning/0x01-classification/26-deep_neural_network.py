@@ -78,38 +78,45 @@ class DeepNeuralNetwork:
             dA = self.cache['A' + str(i - 1)] * (1 - self.cache['A'+str(i-1)])
             dz = np.matmul(weights['W' + str(i)].T, dz) * dA
 
-    def train(self, X, Y, iterations=5000, alpha=0.05,
-              verbose=True, graph=True, step=100):
-        """"Trains the deep neural network"""
-        if type(iterations) is not int:
+    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True,
+              graph=True, step=100):
+        """
+        Returns the evaluation of the training data after
+        iterations of training have occurred
+        used:
+        -forward_prop
+        -gradient_descent
+        - evaluate
+        """
+        if not isinstance(iterations, int):
             raise TypeError("iterations must be an integer")
-        if iterations < 1:
+        elif iterations <= 0:
             raise ValueError("iterations must be a positive integer")
-        if type(alpha) is not float:
+        elif not isinstance(alpha, float):
             raise TypeError("alpha must be a float")
         if alpha <= 0:
             raise ValueError("alpha must be positive")
-        if graph or verbose:
+        if verbose or graph:
             if type(step) is not int:
                 raise TypeError("step must be an integer")
             if step < 0 or step > iterations:
                 raise ValueError("step must be positive and <= iterations")
-        x = []
-        y = []
+        xValue = []
+        yValue = []
         for i in range(iterations):
             A, cache = self.forward_prop(X)
             self.gradient_descent(Y, cache, alpha)
             cost = self.cost(Y, A)
             if verbose:
-                if i < 1 or i % 100 == 0:
-                    print(f"Cost after {i} iterations: {cost}")
-                    x.append(i+step)
-                    y.append(cost)
-        if graph:
-            plt.plot(x, y)
-            plt.xlabel('iteration')
+                if (i < 1 or i % step == 0):
+                    print("Cost after {} iterations: {}".format(i, cost))
+                    xValue.append(i+step)
+                    yValue.append(cost)
+        if graph is True:
+            plt.title('Training Cost')
             plt.ylabel('cost')
-            plt.title("Training Cost")
+            plt.xlabel('iteration')
+            plt.plot(xValue, yValue)
             plt.show()
         return self.evaluate(X, Y)
 
