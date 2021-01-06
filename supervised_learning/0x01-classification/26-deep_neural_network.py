@@ -81,37 +81,37 @@ class DeepNeuralNetwork:
     def train(self, X, Y, iterations=5000, alpha=0.05,
               verbose=True, graph=True, step=100):
         """"Trains the deep neural network"""
-        if type(iterations) is not int:
+        if not isinstance(iterations, int):
             raise TypeError("iterations must be an integer")
-        if iterations < 1:
+        elif iterations <= 0:
             raise ValueError("iterations must be a positive integer")
-        if type(alpha) is not float:
+        elif not isinstance(alpha, float):
             raise TypeError("alpha must be a float")
         if alpha <= 0:
             raise ValueError("alpha must be positive")
-        if graph or verbose:
+        if verbose or graph:
             if type(step) is not int:
                 raise TypeError("step must be an integer")
             if step < 0 or step > iterations:
                 raise ValueError("step must be positive and <= iterations")
         x = []
         y = []
-        for i in range(iterations+1):
-            self.forward_prop(X)
-            self.gradient_descent(Y, self.__cache, alpha)
+        for i in range(iterations):
+            A, cache = self.forward_prop(X)
+            self.gradient_descent(Y, cache, alpha)
+            cost = self.cost(Y, A)
             if verbose:
-                A = self.cost(Y, self.__cache['A'+str(self.L)])
-                print("Cost after {} iterations: {}".format(i, A))
-                if i == 0 or i % 100 == 0:
-                    x.append(i)
-                    y.append(A)
-        if graph:
-            plt.plot(x, y)
-            plt.xlabel('iteration')
+                if (i < 1 or i % step == 0):
+                    print("Cost after {} iterations: {}".format(i, cost))
+                    x.append(i+step)
+                    y.append(cost)
+        if graph is True:
+            plt.title('Training Cost')
             plt.ylabel('cost')
-            plt.title("Training Cost")
+            plt.xlabel('iteration')
+            plt.plot(x, y)
             plt.show()
-        return self.evaluate(X, Y)[0], y[len(y)-1]
+        return self.evaluate(X, Y)
 
     def save(self, filename):
         """save pickle file"""
