@@ -101,9 +101,9 @@ class DeepNeuralNetwork:
             self.gradient_descent(Y, cache, alpha)
             cost = self.cost(Y, A)
             if verbose:
-                print(f"Cost after {i} iterations: {cost}")
                 if i < 1 or i % 100 == 0:
-                    x.append(i)
+                    print(f"Cost after {i} iterations: {cost}")
+                    x.append(i+step)
                     y.append(cost)
         if graph:
             plt.plot(x, y)
