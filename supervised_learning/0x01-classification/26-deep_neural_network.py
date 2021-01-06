@@ -101,7 +101,7 @@ class DeepNeuralNetwork:
             self.gradient_descent(Y, cache, alpha)
             cost = self.cost(Y, A)
             if verbose:
-                if i < 1 or i % 100 == 0:
+                if i < 1 or i % step == 0:
                     print(f"Cost after {i} iterations: {cost}")
                     x.append(i+step)
                     y.append(cost)
