@@ -50,7 +50,7 @@ class DeepNeuralNetwork:
                           self.__cache['A' + str(i)
                                        ]) + self.__weights['b' + str(i + 1)]
             if i != self.__L -1:
-                self.__cache['A' + str(i + 1)] = 1 / (1 + np.exp(-z))
+                self.__cache['A' + str(i + 1)] = 1 / (1 + np.exp(- z))
             else:
                 t = np.exp(z)
                 self.__cache['A' + str(i + 1)] = t / np.sum(t, axis=0)
@@ -66,7 +66,7 @@ class DeepNeuralNetwork:
         """Evaluates the neural network’s predictions"""
         A2 = self.forward_prop(X)[0]
         A3 = np.zeros(A2.shape)
-        A3[np.argmax(A2)] = 1
+        A3[np.argmax(A2, axis=0)] = 1
         return A3, self.cost(Y, A2)
 
     def gradient_descent(self, Y, cache, alpha=0.05):
