@@ -83,13 +83,13 @@ class DeepNeuralNetwork:
         """"Trains the deep neural network"""
         if not isinstance(iterations, int):
             raise TypeError("iterations must be an integer")
-        elif iterations <= 0:
+        elif iterations < 1:
             raise ValueError("iterations must be a positive integer")
         elif not isinstance(alpha, float):
             raise TypeError("alpha must be a float")
-        if alpha <= 0:
+        if alpha < 1:
             raise ValueError("alpha must be positive")
-        if verbose or graph:
+        if graph or verbose:
             if type(step) is not int:
                 raise TypeError("step must be an integer")
             if step < 0 or step > iterations:
@@ -101,15 +101,15 @@ class DeepNeuralNetwork:
             self.gradient_descent(Y, cache, alpha)
             cost = self.cost(Y, A)
             if verbose:
-                if i < 1 or i % step == 0:
-                    print(f"Cost after {i} iterations: {cost}")
+                if (i < 1 or i % step == 0):
+                    print("Cost after {} iterations: {}".format(i, cost))
                     x.append(i+step)
                     y.append(cost)
-        if graph:
+        if graph is True:
             plt.plot(x, y)
-            plt.xlabel('iteration')
+            plt.title('Training Cost')
             plt.ylabel('cost')
-            plt.title("Training Cost")
+            plt.xlabel('iteration')
             plt.show()
         return self.evaluate(X, Y)
 
