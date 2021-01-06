@@ -49,7 +49,7 @@ class DeepNeuralNetwork:
             z = np.matmul(self.__weights['W' + str(i + 1)],
                           self.__cache['A' + str(i)
                                        ]) + self.__weights['b' + str(i + 1)]
-            if i != self.__L -1:
+            if i != self.__L - 1:
                 self.__cache['A' + str(i + 1)] = 1 / (1 + np.exp(- z))
             else:
                 t = np.exp(z)
