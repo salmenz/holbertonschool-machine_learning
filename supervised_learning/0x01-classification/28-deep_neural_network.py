@@ -8,73 +8,80 @@ import pickle
 class DeepNeuralNetwork:
     """class DeepNeuralNetwork"""
     def __init__(self, nx, layers, activation='sig'):
-        if not isinstance(nx, int):
+        if type(nx) is not int:
             raise TypeError("nx must be an integer")
-        elif nx <= 0:
+        if nx < 1:
             raise ValueError("nx must be a positive integer")
         if not isinstance(layers, list) or not layers:
             raise TypeError("layers must be a list of positive integers")
         if activation not in ('sig', 'tanh'):
             raise ValueError("activation must be 'sig' or 'tanh'")
         self.__L = len(layers)
+        self.__activation = activation
         self.__cache = {}
         self.__weights = {}
-        self.__activation = activation
-        for i in range(len(layers)):
-            if not isinstance(layers[i], int) or layers[i] <= 0:
+        self.__weights['W1'] = np.random.normal(size=(layers[0], nx)) \
+            * np.sqrt(2/nx)
+        self.__weights['b1'] = np.zeros((layers[0], 1))
+        for i in range(self.L):
+            if type(layers[i]) is not int or layers[i] < 1:
                 raise TypeError("layers must be a list of positive integers")
-            if i == 0:
-                self.__weights['b' + str(i + 1)] = np.zeros((layers[0], 1))
+            if i != 0:
                 self.__weights['W' + str(i + 1)
-                               ] = np.random.normal(size=(layers[i], nx)
-                                                    ) * np.sqrt(2/nx)
-
-            else:
+                               ] = np.random.normal(size=(layers[i],
+                                                          layers[i-1])) \
+                     * np.sqrt(2/(layers[i-1]))
                 self.__weights['b' + str(i + 1)] = np.zeros((layers[i], 1))
-                self.__weights[
-                    'W' + str(i + 1)
-                ] = np.random.normal(size=(layers[i], layers[i-1])
-                                     )*np.sqrt(
-                    2/layers[i-1])
 
     @property
     def L(self):
-        """The number of layers in the neural network."""
         return self.__L
 
     @property
     def cache(self):
-        """A dictionary to hold all intermediary values of the network"""
         return self.__cache
 
     @property
     def weights(self):
-        """A dictionary to hold all weights and biased of the network"""
         return self.__weights
 
     @property
     def activation(self):
-        """activation function"""
         return self.__activation
 
     def forward_prop(self, X):
-        """Calculates the forward propagation of the neural network"""
-        self.__cache['A0'] = X
+        """Calculates the forward propagation of the neural network
+        X is a numpy.ndarray with shape (nx, m) that contains the input data
+        nx is the number of input features to the neuron
+        m is the number of examples
+        X should be saved to the cache dictionary using the key A0
+        """
+        self.__cache["A0"] = X
         for i in range(self.__L):
-            z = np.matmul(self.__weights['W' + str(i + 1)],
-                          self.__cache['A' + str(i)
-                                       ]) + self.__weights['b' + str(i + 1)]
-            if i != self.__L - 1:
-                if self.__activation == "sig":
-                    self.__cache['A' + str(i + 1)] = 1 / (1 + np.exp(- z))
-                else:
-                    self.__cache['A' + str(i+1)] = (np.exp(z) - np.exp(-z)) / \
-                                                     (np.exp(z) + np.exp(-z))
-            else:
-                t = np.exp(z)
-                self.__cache['A' + str(i + 1)] = t / np.sum(t, axis=0)
-        return self.cache['A' + str(i+1)], self.__cache
+            w = self.__weights["W"+str(i+1)]
+            b = self.__weights["b" + str(i+1)]
+            z = np.matmul(w, self.__cache["A"+str(i)]) + b
+            if(i != self.__L - 1):
+                if self.__activation == 'sig':
+                    Sigmoid_a = 1 / (1 + np.exp(-z))
+                    self.__cache["A"+str(i+1)] = Sigmoid_a
+                elif self.__activation == 'tanh':
+                    tanh = (2 / (1 + np.exp(-2 * z))) - 1
+                    self.__cache["A"+str(i+1)] = tanh
 
+            else:
+                """ softmax for the output layer
+                Softmax function returns probabilities sum to 1
+                OR
+                t =np.exp(z)
+                sumT = np.sum(t, axis=0)
+                softmax = t/sumT
+                """
+                t = np.exp(z - np.max(z))
+                softmax = t / t.sum(axis=0)
+                self.__cache["A"+str(i+1)] = softmax
+
+        return self.__cache["A"+str(self.__L)], self.__cache
     def cost(self, Y, A):
         """calcul cost"""
         m = Y.shape[1]
