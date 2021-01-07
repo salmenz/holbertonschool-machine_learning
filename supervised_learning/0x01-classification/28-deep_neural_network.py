@@ -69,18 +69,17 @@ class DeepNeuralNetwork:
 
     def cost(self, Y, A):
         """calcul cost"""
-        m = Y.shape[1]
-        s = - Y * np.log(A)
-        return 1/m*np.sum(s)
+        classes, m = Y.shape
+        loss = - (Y * np.log(A))
+        sumloss = np.sum(loss)
+        cost = (1 / m) * sumloss
+        return cost
 
     def evaluate(self, X, Y):
-        """ evaluate The activated output
-        Softmax function returns probabilities sum to 1
-        """
-        softmax, cache = self.forward_prop(X)
-        pred_evalute = np.where(softmax == np.amax(softmax, axis=0), 1, 0)
-        cost = self.cost(Y, softmax)
-        return pred_evalute, cost
+        """Evaluates the neural network’s predictions"""
+        A2 = self.forward_prop(X)[0]
+        A3 = np.where(A2 == np.amax(A2, axis=0), 1, 0)
+        return A3, self.cost(Y, A2)
 
     def gradient_descent(self, Y, cache, alpha=0.05):
         """Calculates one pass of gradient descent on the neural network"""
