@@ -124,7 +124,6 @@ class DeepNeuralNetwork:
                     print("Cost after {} iterations: {}".format(i, cost))
                     x.append(i+step)
                     y.append(cost)
-        print("Cost after {} iterations: {}".format(i+1, cost))
         if graph is True:
             plt.title('Training Cost')
             plt.ylabel('cost')
