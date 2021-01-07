@@ -69,11 +69,9 @@ class DeepNeuralNetwork:
 
     def cost(self, Y, A):
         """calcul cost"""
-        classes, m = Y.shape
-        loss = - (Y * np.log(A))
-        sumloss = np.sum(loss)
-        cost = (1 / m) * sumloss
-        return cost
+        m = Y.shape[1]
+        s = - Y * np.log(A)
+        return 1/m*np.sum(s)
 
     def evaluate(self, X, Y):
         """Evaluates the neural network’s predictions"""
@@ -115,8 +113,8 @@ class DeepNeuralNetwork:
                 raise TypeError("step must be an integer")
             if step < 0 or step > iterations:
                 raise ValueError("step must be positive and <= iterations")
-        x = []
-        y = []
+        xValue = []
+        yValue = []
         for i in range(iterations):
             A, cache = self.forward_prop(X)
             self.gradient_descent(Y, cache, alpha)
@@ -124,14 +122,13 @@ class DeepNeuralNetwork:
             if verbose:
                 if (i < 1 or i % step == 0):
                     print("Cost after {} iterations: {}".format(i, cost))
-                    x.append(i+step)
-                    y.append(cost)
-        print("Cost after {} iterations: {}".format(i+1, cost))
+                    xValue.append(i+step)
+                    yValue.append(cost)
         if graph is True:
             plt.title('Training Cost')
             plt.ylabel('cost')
             plt.xlabel('iteration')
-            plt.plot(x, y)
+            plt.plot(xValue, yValue)
             plt.show()
         return self.evaluate(X, Y)
 
