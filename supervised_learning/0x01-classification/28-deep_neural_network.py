@@ -50,38 +50,23 @@ class DeepNeuralNetwork:
         return self.__activation
 
     def forward_prop(self, X):
-        """Calculates the forward propagation of the neural network
-        X is a numpy.ndarray with shape (nx, m) that contains the input data
-        nx is the number of input features to the neuron
-        m is the number of examples
-        X should be saved to the cache dictionary using the key A0
-        """
-        self.__cache["A0"] = X
+        """Calculates the forward propagation of the neural network"""
+        self.__cache['A0'] = X
         for i in range(self.__L):
-            w = self.__weights["W"+str(i+1)]
-            b = self.__weights["b" + str(i+1)]
-            z = np.matmul(w, self.__cache["A"+str(i)]) + b
-            if(i != self.__L - 1):
-                if self.__activation == 'sig':
-                    Sigmoid_a = 1 / (1 + np.exp(-z))
-                    self.__cache["A"+str(i+1)] = Sigmoid_a
-                elif self.__activation == 'tanh':
-                    tanh = (2 / (1 + np.exp(-2 * z))) - 1
-                    self.__cache["A"+str(i+1)] = tanh
-
+            z = np.matmul(self.__weights['W' + str(i + 1)],
+                          self.__cache['A' + str(i)
+                                       ]) + self.__weights['b' + str(i + 1)]
+            if i != self.__L - 1:
+                if self.__activation == "sig":
+                    self.__cache['A' + str(i + 1)] = 1 / (1 + np.exp(- z))
+                else:
+                    self.__cache['A' + str(i+1)] = (np.exp(z) - np.exp(-z)) / \
+                                                     (np.exp(z) + np.exp(-z))
             else:
-                """ softmax for the output layer
-                Softmax function returns probabilities sum to 1
-                OR
-                t =np.exp(z)
-                sumT = np.sum(t, axis=0)
-                softmax = t/sumT
-                """
-                t = np.exp(z - np.max(z))
-                softmax = t / t.sum(axis=0)
-                self.__cache["A"+str(i+1)] = softmax
+                t = np.exp(z)
+                self.__cache['A' + str(i + 1)] = t / np.sum(t, axis=0)
+        return self.cache['A' + str(i+1)], self.__cache
 
-        return self.__cache["A"+str(self.__L)], self.__cache
     def cost(self, Y, A):
         """calcul cost"""
         m = Y.shape[1]
@@ -89,10 +74,13 @@ class DeepNeuralNetwork:
         return 1/m*np.sum(s)
 
     def evaluate(self, X, Y):
-        """Evaluates the neural network’s predictions"""
-        A2 = self.forward_prop(X)[0]
-        A3 = np.where(A2 == np.amax(A2, axis=0), 1, 0)
-        return A3, self.cost(Y, A2)
+        """ evaluate The activated output
+        Softmax function returns probabilities sum to 1
+        """
+        softmax, cache = self.forward_prop(X)
+        pred_evalute = np.where(softmax == np.amax(softmax, axis=0), 1, 0)
+        cost = self.cost(Y, softmax)
+        return pred_evalute, cost
 
     def gradient_descent(self, Y, cache, alpha=0.05):
         """Calculates one pass of gradient descent on the neural network"""
