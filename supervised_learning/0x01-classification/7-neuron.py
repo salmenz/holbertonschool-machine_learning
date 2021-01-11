@@ -76,8 +76,8 @@ class Neuron:
             self.gradient_descent(X, Y, self.__A, alpha)
             if verbose:
                 A = self.cost(Y, self.__A)
-                print(f"Cost after {i} iterations: {A}")
                 if i == 0 or i % 100 == 0:
+                    print(f"Cost after {} iterations: {}".format(i, A))
                     x.append(i)
                     y.append(A)
         if graph:
@@ -86,4 +86,4 @@ class Neuron:
             plt.ylabel('cost')
             plt.title("Training Cost")
             plt.show()
-        return self.evaluate(X, Y)[0], y[len(y)-1]
+        return self.evaluate(X, Y)
