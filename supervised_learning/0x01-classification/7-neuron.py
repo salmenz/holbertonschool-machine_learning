@@ -77,7 +77,7 @@ class Neuron:
             if verbose:
                 A = self.cost(Y, self.__A)
                 if i == 0 or i % 100 == 0:
-                    print(f"Cost after {} iterations: {}".format(i, A))
+                    print("Cost after {} iterations: {}".format(i, A))
                     x.append(i)
                     y.append(A)
         if graph:
