@@ -110,4 +110,4 @@ class DeepNeuralNetwork:
             plt.ylabel('cost')
             plt.title("Training Cost")
             plt.show()
-        return self.evaluate(X, Y)[0], y[len(y)-1]
+        return self.evaluate(X, Y)
