@@ -104,8 +104,8 @@ class NeuralNetwork:
             self.gradient_descent(X, Y, self.__A1, self.__A2, alpha)
             if verbose:
                 A = self.cost(Y, self.__A2)
-                print(f"Cost after {i} iterations: {A}")
                 if i == 0 or i % 100 == 0:
+                    print(f"Cost after {i} iterations: {A}")
                     x.append(i)
                     y.append(A)
         if graph:
