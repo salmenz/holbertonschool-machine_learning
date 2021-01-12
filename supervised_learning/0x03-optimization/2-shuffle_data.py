@@ -10,4 +10,4 @@ def shuffle_data(X, Y):
     perm = np.random.permutation(len(X))
     x = X[perm]
     y = Y[perm]
-    return x,y
+    return x, y
