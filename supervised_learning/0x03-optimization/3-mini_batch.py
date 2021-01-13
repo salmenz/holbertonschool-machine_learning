@@ -19,8 +19,8 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
         x = tf.get_collection('x', scope=None)[0]
         y = tf.get_collection('y', scope=None)[0]
         print(X_train.shape[0])
+        X_train, Y_train = shuffle_data(X_train, Y_train)
         for ep in range(epochs+1):
-            X_train, Y_train = shuffle_data(X_train, Y_train)
             tacc = sess.run(accuracy, {x: X_train, y: Y_train})
             tloss = sess.run(loss, {x: X_train, y: Y_train})
             vacc = sess.run(accuracy, {x: X_valid, y: Y_valid})
@@ -31,10 +31,9 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
             print("\tValidation Cost: {}".format(vloss))
             print("\tValidation Accuracy: {}".format(vacc))
             if ep != epochs:
-                for i in range(0, X_train.shape[0], batch_size):
-                    shuffle_data
-                    xdat = X_train[i:i+batch_size]
-                    ydat = Y_train[i:i+batch_size]
+                for i in range(batch_size, X_train.shape[0]+ batch_size, batch_size):
+                    xdat = X_train[i-batch_size:i]
+                    ydat = Y_train[i-batch_size:i]
                     sess.run(train_op, {x: xdat, y: ydat})
                     if i % (batch_size*100) == 0 and i != 0:
                         dl, da = sess.run((loss, accuracy), {x: xdat, y: ydat})
