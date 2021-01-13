@@ -4,14 +4,14 @@ import tensorflow as tf
 
 
 def create_batch_norm_layer(prev, n, activation):
-    """creates a batch normalization layer for a neural network in tensorflow"""
+    """creates batch normalization layer for a neural network in tensorflow"""
     kernel = tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
-    layer = tf.layers.Dense(units=n, activation=activation, name="layer",
-                         kernel_initializer=kernel)
-    gamma = np.zeros(1, n)
-    beta = np.ones(1, n)
+    layer = tf.layers.Dense(units=n, name="layer",
+                            kernel_initializer=kernel)
+    mean, variance = tf.nn.moments(layer(prev), [0])
     epsilon = 1e-8
-    mean = np.mean(prev, axis=0)
-    variance = np.var((prev - mean), axis=0)
-    prev = (prev - mean) / (np.sqrt(variance + epsilon))
-    return gamma * prev + beta
+    gamma = tf.Variable(tf.ones([n]))
+    beta = tf.Variable(tf.zeros([n]))
+    Bnorm = tf.nn.batch_normalization(layer(prev), mean, variance, beta,
+                                      gamma, epsilon)
+    return activation(Bnorm)
