@@ -35,9 +35,9 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                     xdat = X[i-batch_size:i]
                     ydat = Y[i-batch_size:i]
                     sess.run(train_op, {x: xdat, y: ydat})
+                    dl, da = sess.run((loss, accuracy), {x: xdat, y: ydat})
                     if i % (batch_size*100) == 0 and i != 0:
-                        dl, da = sess.run((loss, accuracy), {x: xdat, y: ydat})
-                        print("\tStep {}:".format(i/batch_size))
+                        print("\tStep {}:".format(i//batch_size))
                         print("\t\tCost: {}".format(dl))
                         print("\t\tAccuracy: {}".format(da))
         return saver.save(sess, save_path)
