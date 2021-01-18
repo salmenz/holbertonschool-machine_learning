@@ -11,6 +11,6 @@ def f1_score(confusion):
     i = 0
     for cl, cl1 in zip(c, confusion):
         t[i] = cl[i] / cl.sum()
-        t1[i] = cl[i] / cl1.sum()
+        t1[i] = cl1[i] / cl1.sum()
         i += 1
     return 2 * t * t1 / (t1 + t)
