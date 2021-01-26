@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""add train the model with learning rate decay"""
+"""add save the best iteration of the model"""
 import tensorflow.keras as k
 
 
 def train_model(network, data, labels, batch_size, epochs,
                 validation_data=None, early_stopping=False, patience=0,
                 learning_rate_decay=False, alpha=0.1, decay_rate=1,
-                verbose=True, shuffle=False):
-    """add train the model with learning rate decay"""
+                save_best=False, filepath=None, verbose=True, shuffle=False):
+    """add save the best iteration of the model"""
     if validation_data:
         calbacks = []
         if learning_rate_decay:
@@ -20,6 +20,11 @@ def train_model(network, data, labels, batch_size, epochs,
             callback = k.callbacks.EarlyStopping(monitor='val_loss',
                                                  patience=patience,
                                                  verbose=verbose)
+            calbacks.append(callback)
+        if save_best:
+            callback = k.callbacks.ModelCheckpoint(filepath=filepath,
+                                                   monitor="val_loss",
+                                                   save_best_only=True)
             calbacks.append(callback)
         return network.fit(x=data, y=labels, batch_size=batch_size,
                            epochs=epochs, verbose=verbose, shuffle=shuffle,
