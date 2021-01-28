@@ -17,7 +17,7 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
         pw = (((w - 1) * sw + kw - w) // 2) + 1
     out_images = np.zeros((m, (h - kh + (2 * ph))//sh + 1,
                               (w - kw + (2 * pw))//sw + 1))
-    images = np.pad(images, ((0, 0), (ph, ph), (pw, pw),(0, 0)), 'constant')
+    images = np.pad(images, ((0, 0), (ph, ph), (pw, pw), (0, 0)), 'constant')
     for i in range((h - kh + (2 * ph))//sh + 1):
         for j in range((w - kw + (2 * pw))//sw + 1):
             out_images[:, i, j] = np.sum(kernel * images[
