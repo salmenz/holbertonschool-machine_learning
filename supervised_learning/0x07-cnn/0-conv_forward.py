@@ -10,11 +10,8 @@ def conv_forward(A_prev, W, b, activation, padding="same", stride=(1, 1)):
     m, h_prev, w_perv = A_prev.shape[:3]
     kh, kw, c_prev, c_new = W.shape
     sh, sw = stride
-    if type(padding) is tuple:
-        ph, pw = padding
-    elif padding == 'valid':
-        ph, pw = 0, 0
-    else:
+    ph, pw = 0, 0
+    if padding == "same":
         ph = (((h_prev - 1) * sh + kh - h_prev) // 2) + 1
         pw = (((w_perv - 1) * sw + kw - w_perv) // 2) + 1
     out_images = np.zeros((m, (h_prev - kh + (2 * ph))//sh + 1,
