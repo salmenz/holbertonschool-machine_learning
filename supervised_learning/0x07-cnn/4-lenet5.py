@@ -5,23 +5,28 @@ import tensorflow as tf
 
 def lenet5(x, y):
     kernel = tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
-    conv1 = tf.layers.conv2d(x, filters = 6, kernel_size=(5, 5), kernel_initializer=kernel, padding="same", activation='relu')
-    
-    pool1 = tf.layers.max_pooling2d(conv1, pool_size=(2,2), strides=(2, 2))
+    conv1 = tf.layers.conv2d(x, filters=6, kernel_size=(5, 5),
+                             kernel_initializer=kernel,
+                             padding="same", activation='relu')
 
-    conv3 = tf.layers.conv2d(pool1, filters = 16, kernel_size=(5, 5), kernel_initializer=kernel, padding="same", activation='relu')
+    pool1 = tf.layers.max_pooling2d(conv1, pool_size=(2, 2), strides=(2, 2))
 
-    pool2 = tf.layers.max_pooling2d(conv3, pool_size=(2,2), strides=(2, 2))
+    conv3 = tf.layers.conv2d(pool1, filters=16, kernel_size=(5, 5),
+                             kernel_initializer=kernel,
+                             padding="same", activation='relu')
+
+    pool2 = tf.layers.max_pooling2d(conv3, pool_size=(2, 2), strides=(2, 2))
 
     flat = tf.contrib.layers.flatten(pool2)
 
-    #fully connected
+    layer1 = tf.layers.dense(flat, units=120,
+                             kernel_initializer=kernel, activation='relu')
 
-    layer1 = tf.layers.dense(flat, units=120, kernel_initializer=kernel, activation='relu')
+    layer2 = tf.layers.dense(layer1, units=84,
+                             kernel_initializer=kernel, activation='relu')
 
-    layer2 = tf.layers.dense(layer1, units=84, kernel_initializer=kernel, activation='relu')
-
-    layer3 = tf.layers.dense(layer2, units=10, kernel_initializer=kernel, activation='softmax')
+    layer3 = tf.layers.dense(layer2, units=10,
+                             kernel_initializer=kernel, activation='softmax')
 
     y_pred = tf.nn.softmax(layer3)
 
