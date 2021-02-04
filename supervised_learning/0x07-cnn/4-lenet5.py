@@ -4,6 +4,7 @@ import tensorflow as tf
 
 
 def lenet5(x, y):
+    """wiw"""
     kernel = tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
     conv1 = tf.layers.conv2d(x, filters=6, kernel_size=(5, 5),
                              kernel_initializer=kernel,
