@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""LeNet-5 (Tensorflow)"""
+"""builds a modified version of the LeNet-5 architecture using tensorflow"""
 import tensorflow as tf
 
 
 def lenet5(x, y):
-    """wiw wiw"""
+    """builds a modified version of the LeNet architecture using tensorflow"""
     kernel = tf.contrib.layers.variance_scaling_initializer()
     conv1 = tf.layers.conv2d(x, filters=6, kernel_size=(5, 5),
                              kernel_initializer=kernel,
@@ -12,11 +12,11 @@ def lenet5(x, y):
 
     pool1 = tf.layers.max_pooling2d(conv1, pool_size=(2, 2), strides=(2, 2))
 
-    conv3 = tf.layers.conv2d(pool1, filters=16, kernel_size=(5, 5),
+    conv2 = tf.layers.conv2d(pool1, filters=16, kernel_size=(5, 5),
                              kernel_initializer=kernel,
                              padding="VALID", activation='relu')
 
-    pool2 = tf.layers.max_pooling2d(conv3, pool_size=(2, 2), strides=(2, 2))
+    pool2 = tf.layers.max_pooling2d(conv2, pool_size=(2, 2), strides=(2, 2))
 
     flat = tf.contrib.layers.flatten(pool2)
 
