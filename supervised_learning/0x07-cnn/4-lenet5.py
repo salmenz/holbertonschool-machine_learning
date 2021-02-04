@@ -8,13 +8,13 @@ def lenet5(x, y):
     kernel = tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
     conv1 = tf.layers.conv2d(x, filters=6, kernel_size=(5, 5),
                              kernel_initializer=kernel,
-                             padding="same", activation='relu')
+                             padding="SAME", activation='relu')
 
     pool1 = tf.layers.max_pooling2d(conv1, pool_size=(2, 2), strides=(2, 2))
 
     conv3 = tf.layers.conv2d(pool1, filters=16, kernel_size=(5, 5),
                              kernel_initializer=kernel,
-                             padding="same", activation='relu')
+                             padding="VALID", activation='relu')
 
     pool2 = tf.layers.max_pooling2d(conv3, pool_size=(2, 2), strides=(2, 2))
 
@@ -27,7 +27,7 @@ def lenet5(x, y):
                              kernel_initializer=kernel, activation='relu')
 
     layer3 = tf.layers.dense(layer2, units=10,
-                             kernel_initializer=kernel, activation='softmax')
+                             kernel_initializer=kernel)
 
     y_pred = tf.nn.softmax(layer3)
 
