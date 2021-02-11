@@ -12,13 +12,13 @@ def projection_block(A_prev, filters, s=2):
 
     l11 = K.layers.Conv2D(filters=F12, kernel_size=(1, 1), padding='same',
                           activation='relu', kernel_initializer=kernel,
-                          strides=(s, s))(A_prev)
+                          strides=s)(A_prev)
 
     b11 = K.layers.BatchNormalization()(l11)
 
     l1 = K.layers.Conv2D(filters=F11, kernel_size=(1, 1), padding='same',
                          activation='relu', kernel_initializer=kernel,
-                         strides=(s, s))(A_prev)
+                         strides=s)(A_prev)
 
     b1 = K.layers.BatchNormalization()(l1)
 
