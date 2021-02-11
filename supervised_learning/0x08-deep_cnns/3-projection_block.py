@@ -1,20 +1,14 @@
 #!/usr/bin/env python3
-"""hat builds a projection block as described in Deep Residual
+"""that builds a projection block as described in Deep Residual
 Learning for Image Recognition (2015)"""
 import tensorflow.keras as K
 
 
 def projection_block(A_prev, filters, s=2):
-    """hat builds a projection block as described
+    """that builds a projection block as described
     in Deep Residual Learning for Image Recognition (2015)"""
     F11, F3, F12 = filters
     kernel = K.initializers.he_normal()
-
-    l11 = K.layers.Conv2D(filters=F12, kernel_size=(1, 1), padding='same',
-                          kernel_initializer=kernel,
-                          strides=s)(A_prev)
-
-    b11 = K.layers.BatchNormalization()(l11)
 
     l1 = K.layers.Conv2D(filters=F11, kernel_size=(1, 1), padding='same',
                          kernel_initializer=kernel,
@@ -35,6 +29,12 @@ def projection_block(A_prev, filters, s=2):
                          kernel_initializer=kernel)(d2)
 
     b3 = K.layers.BatchNormalization()(l3)
+
+    l11 = K.layers.Conv2D(filters=F12, kernel_size=(1, 1), padding='same',
+                          kernel_initializer=kernel,
+                          strides=s)(A_prev)
+
+    b11 = K.layers.BatchNormalization()(l11)
 
     l4 = K.layers.Add()([b3, b11])
 
