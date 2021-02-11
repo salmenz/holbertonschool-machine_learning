@@ -10,17 +10,17 @@ def dense_block(X, nb_filters, growth_rate, layers):
     out = X
     kernel = K.initializers.he_normal()
     for i in range(layers):
-        dense_f = K.layers.BatchNormalization()(X)
-        dense_f = K.layers.Activation('relu')(dense_f)
-        inter_chan = growth_rate * 4
-        dense_f = K.layers.Conv2D(inter_chan, (1, 1), padding='same',
-                                  kernel_initializer=kernel)(dense_f)
+        dence_f = K.layers.BatchNormalization()(out)
+        dence_f = K.layers.ReLU()(dence_f)
+        inter_ch = growth_rate * 4
+        dence_f = K.layers.Conv2D(inter_ch, kernel_size=(1, 1), padding='same',
+                                  kernel_initializer=kernel,)(dence_f)
 
-        dense_f = K.layers.BatchNormalization()(dense_f)
-        dense_f = K.layers.Activation('relu')(dense_f)
-        dense_f = K.layers.Conv2D(growth_rate, (3, 3), padding='same',
-                                  kernel_initializer=kernel)(dense_f)
-
-        out = K.layers.concatenate([out, dense_f])
+        dence_f = K.layers.BatchNormalization()(dence_f)
+        dence_f = K.layers.ReLU()(dence_f)
+        dence_f = K.layers.Conv2D(growth_rate, kernel_size=(3, 3),
+                                  padding='same',
+                                  kernel_initializer=kernel)(dence_f)
+        out = K.layers.concatenate([out, dence_f])
         nb_filters += growth_rate
     return out, nb_filters
