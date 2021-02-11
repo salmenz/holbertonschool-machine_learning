@@ -7,6 +7,7 @@ import tensorflow.keras as K
 def dense_block(X, nb_filters, growth_rate, layers):
     """builds a dense block as described in Densely
     Connected Convolutional Networks"""
+    out = X
     kernel = K.initializers.he_normal()
     for i in range(layers):
         dense_f = K.layers.BatchNormalization()(X)
@@ -20,6 +21,6 @@ def dense_block(X, nb_filters, growth_rate, layers):
         dense_f = K.layers.Conv2D(growth_rate, (3, 3), padding='same',
                                   kernel_initializer=kernel)(dense_f)
 
-        out = K.layers.concatenate([X, dense_f])
+        out = K.layers.concatenate([out, dense_f])
         nb_filters += growth_rate
     return out, nb_filters
