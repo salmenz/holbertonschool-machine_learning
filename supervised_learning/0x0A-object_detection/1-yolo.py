@@ -40,8 +40,8 @@ class Yolo:
             by = (self.sig(t_y) + cy) / grid_height
             pw = self.anchors[i, :, 0]
             ph = self.anchors[i, :, 1]
-            input_width = self.model.input.shape[1]
-            input_height = self.model.input.shape[2]
+            input_width = self.model.input.shape[1].value
+            input_height = self.model.input.shape[2].value
             bw = pw * np.exp(t_w) / input_width
             bh = ph * np.exp(t_h) / input_height
             x1 = bx - bw / 2
