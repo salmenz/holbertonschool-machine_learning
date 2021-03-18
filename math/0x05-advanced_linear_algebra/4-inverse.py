@@ -73,7 +73,7 @@ def inverse(matrix):
             return None
         for i in range(len(adj)):
             for j in range(len(adj)):
-                adj[i][j] /=  det
+                adj[i][j] /= det
         if len(adj) == 1:
             adj[0][0] /= matrix[0][0]
         return adj
