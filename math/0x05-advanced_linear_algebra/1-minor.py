@@ -31,8 +31,6 @@ def determinant(matrix):
 
 def minor(matrix):
     """calculates the minor of a matrix"""
-    if matrix == [[]]:
-        return 1
     if type(matrix) != list or len(matrix) == 0:
         raise TypeError("matrix must be a list of lists")
     for i in matrix:
