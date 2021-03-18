@@ -2,7 +2,7 @@
 """calculates the minor of a matrix"""
 
 
-def drop(matrix, i , j):
+def drop(matrix, i, j):
     """drop line and column"""
     l2 = []
     for x in range(len(matrix)):
@@ -48,7 +48,7 @@ def minor(matrix):
         l1 = []
         for i in range(len(matrix)):
             for j in range(len(matrix)):
-                l1.append(determinant(drop(matrix, i ,j)))
+                l1.append(determinant(drop(matrix, i, j)))
         mat = []
         for i in range(0, len(l1), len(matrix)):
             mat.append(l1[i:i + len(matrix)])
