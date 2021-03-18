@@ -53,4 +53,7 @@ def cofactor(matrix):
         mat = []
         for i in range(0, len(l1), len(matrix)):
             mat.append(l1[i:i + len(matrix)])
+        if len(mat) == 2:
+            mat[1][0] *= -1
+            mat[1][1] *= -1
         return mat
