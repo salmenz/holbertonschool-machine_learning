@@ -3,6 +3,7 @@
 
 
 def drop(matrix, j):
+    """drop a column"""
     l2 = []
     for x in range(len(matrix)):
         l1 = []
