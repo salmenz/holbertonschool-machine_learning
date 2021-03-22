@@ -7,7 +7,7 @@ def correlation(C):
     """calculates a correlation matrix"""
     if not isinstance(C, np.ndarray):
         raise TypeError("C must be a numpy.ndarray")
-    if len(C.shape) != :
+    if len(C.shape) != 2:
         raise ValueError("C must be a 2D square matrix")
     variance = np.sqrt(np.diag(C))
     outer = np.outer(variance, variance)
