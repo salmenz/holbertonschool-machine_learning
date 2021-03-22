@@ -16,7 +16,6 @@ class MultiNormal:
         self.mean = data.mean(axis=1, keepdims=True)
         self.cov = np.matmul(data - self.mean, np.transpose(data - self.mean))\
             / (data.shape[1] - 1)
-    
 
     def pdf(self, x):
         """calculates the PDF at a data point"""
