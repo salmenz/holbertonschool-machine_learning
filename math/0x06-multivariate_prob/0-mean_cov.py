@@ -10,4 +10,4 @@ def mean_cov(X):
     if X.shape[0] < 2:
         raise ValueError("X must contain multiple data points")
     mean = X.mean(axis=0, keepdims=True)
-    return mean, np.matmul(np.transpose(X - mean), (X - mean))/(X.shape[0] - 1)
+    return mean, np.matmul((X - mean).T, (X - mean))/(X.shape[0] - 1)
