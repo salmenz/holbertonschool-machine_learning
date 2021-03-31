@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
+import numpy as np
 """tests for the optimum number of clusters by variance"""
 kmeans = __import__('1-kmeans').kmeans
 variance = __import__('2-variance').variance
-import numpy as np
 
 
 def optimum_k(X, kmin=1, kmax=None, iterations=1000):
