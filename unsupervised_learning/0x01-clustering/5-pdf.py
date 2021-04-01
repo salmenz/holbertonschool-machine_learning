@@ -12,14 +12,17 @@ def pdf(X, m, S):
         return None
     if type(S) is not np.ndarray or len(S.shape) != 2:
         return None
+    if X.shape[1] != m.shape[0] or X.shape[1] != S.shape[0]:
+        return None
+    if S.shape[1] != S.shape[0]:
+        return None
     n, d = X.shape
     if d != m.shape[0] or (d, d) != S.shape:
         return None
-    m1 = X - m
-    inv_S = np.linalg.inv(S)
-    mul1 = np.matmul(m1, inv_S)
-    var1 = np.exp(np.matmul(mul1, m1.T) * -0.5)
-    var2 = (((2 * np.pi) ** X.shape[1]) * np.linalg.det(S)) ** (0.5)
-    pdf = var1/var2
-    pdf = pdf.diagonal()
-    return np.where(pdf < 1e-300, 1e-300, pdf)
+    d = X.shape[1]
+    K = 1 / (np.sqrt((2 * np.pi) ** d * np.linalg.det(S)))
+    b = np.dot((X - m), np.linalg.inv(S))
+    bb = -0.5 * np.dot(b, (X - m).T).diagonal()
+    P = K * np.exp(bb)
+    P = np.where(P >= 1e-300, P, 1e-300)
+    return P
