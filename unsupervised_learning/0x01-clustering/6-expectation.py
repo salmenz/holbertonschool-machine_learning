@@ -19,14 +19,12 @@ def expectation(X, pi, m, S):
     k = pi.shape[0]
     if (k, X.shape[1]) != m.shape or (k, X.shape[1], X.shape[1]) != S.shape:
         return None, None
-    n = X.shape[0]
-    k = S.shape[0]
-    g = np.zeros((k, n))
-    for cluster in range(k):
-        prob = pdf(X, m[cluster], S[cluster])
-        prior = pi[cluster]
-        g[cluster] = prior * prob
-    total = np.sum(g, axis=0, keepdims=True)
-    post = g / total
-    tot_likel = np.sum(np.log(total))
+    g = []
+    for i in range(k):
+        P = pdf(X, m[i], S[i]) * pi[i]
+        g.append(P)
+    g = np.array(g)
+    lh = np.log(g.sum(axis=0))
+    tot_likel = np.sum(lh)
+    post = g / g.sum(axis=0)
     return post, tot_likel
