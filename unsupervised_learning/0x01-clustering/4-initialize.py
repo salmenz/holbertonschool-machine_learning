@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
+"""initializes variables for a Gaussian Mixture Model"""
 import numpy as np
 kmeans = __import__('1-kmeans').kmeans
-"""initializes variables for a Gaussian Mixture Model"""
 
 
 def initialize(X, k):
