@@ -12,9 +12,8 @@ def pdf(X, m, S):
         return None
     if type(S) is not np.ndarray or len(S.shape) != 2:
         return None
-    if X.shape[1] != m.shape[0] or X.shape[1] != S.shape[0]:
-        return None
-    if S.shape[1] != S.shape[0]:
+    n, d = X.shape
+    if d != m.shape[0] or (d, d) != S.shape:
         return None
     m1 = X - m
     inv_S = np.linalg.inv(S)
