@@ -19,12 +19,12 @@ def expectation(X, pi, m, S):
     k = pi.shape[0]
     if (k, X.shape[1]) != m.shape or (k, X.shape[1], X.shape[1]) != S.shape:
         return None, None
-    g = []
+    g_ar = []
     for i in range(k):
         P = pdf(X, m[i], S[i]) * pi[i]
-        g.append(P)
-    g = np.array(g)
-    lh = np.log(g.sum(axis=0))
-    tot_likel = np.sum(lh)
-    post = g / g.sum(axis=0)
-    return post, tot_likel
+        g_ar.append(P)
+    g_ar = np.array(g_ar)
+    lh = np.log(g_ar.sum(axis=0))
+    sum_lh = np.sum(lh)
+    g_ar /= g_ar.sum(axis=0)
+    return g_ar, sum_lh
