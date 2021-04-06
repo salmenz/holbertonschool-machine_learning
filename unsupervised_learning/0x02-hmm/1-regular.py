@@ -11,15 +11,10 @@ def regular(P):
         return None
     if np.max(P) > 1 or np.min(P) < 0:
         return None
-    X = np.matmul(P, P)
-    for _ in range(4):
-        if np.array_equal(X, P):
-            return None
-        X = np.matmul(X, P)
-    if not np.all(X > 0):
-        return None
     s = np.zeros(P.shape[0])
     s[0] = 1
     while not np.array_equal(np.matmul(s, P), s):
         s = np.matmul(s, P)
+    if np.any(s == 0):
+        return None
     return s
