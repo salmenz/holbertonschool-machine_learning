@@ -8,8 +8,8 @@ def regular(P):
 
     if np.any(P == 0):
         return None
-    s = np.zeros(P.shape[0])
-    s[0] = 1
+    s = np.zeros(1, P.shape[0])
+    s[0, 0] = 1
     while not np.array_equal(np.matmul(s, P), s):
         s = np.matmul(s, P)
     return s
