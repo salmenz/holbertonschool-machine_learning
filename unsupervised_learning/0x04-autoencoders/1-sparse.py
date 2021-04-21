@@ -13,10 +13,10 @@ def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
             y = (K.layers.Dense(hidden_layers[i], activation="relu"))(enc_in)
         else:
             y = (K.layers.Dense(hidden_layers[i], activation="relu",
-                 kernel_regularizer=k_r))(y)
+                 activity_regularizer=k_r))(y)
 
     y = (K.layers.Dense(latent_dims, activation="relu",
-         kernel_regularizer=k_r))(y)
+         activity_regularizer=k_r))(y)
     encoder = K.Model(enc_in, y)
 
     # decoder
