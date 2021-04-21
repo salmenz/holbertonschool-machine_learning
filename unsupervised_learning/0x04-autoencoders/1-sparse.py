@@ -10,8 +10,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
     k_r = K.regularizers.l1(lambtha)
     for i in range(len(hidden_layers)):
         if i == 0:
-            y = (K.layers.Dense(hidden_layers[i], activation="relu",
-                 kernel_regularizer=k_r))(enc_in)
+            y = (K.layers.Dense(hidden_layers[i], activation="relu"))(enc_in)
         else:
             y = (K.layers.Dense(hidden_layers[i], activation="relu",
                  kernel_regularizer=k_r))(y)
