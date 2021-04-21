@@ -7,14 +7,14 @@ def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
     """sparse autoencoder"""
     # encoder
     enc_in = K.Input(shape=(input_dims,))
-    k_r = K.regularizers.l1(lambtha)
     for i in range(len(hidden_layers)):
         if i == 0:
             y = (K.layers.Dense(hidden_layers[i], activation="relu"))(enc_in)
         else:
             y = (K.layers.Dense(hidden_layers[i], activation="relu"))(y)
+    k_r = K.regularizers.l1(lambtha)
     y = (K.layers.Dense(latent_dims, activation="relu",
-         kernel_regularizer=k_r))(y)
+         activity_regularizer=k_r))(y)
     encoder = K.Model(enc_in, y)
 
     # decoder
