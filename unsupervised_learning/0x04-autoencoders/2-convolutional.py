@@ -37,8 +37,6 @@ def autoencoder(input_dims, filters, latent_dims):
          activation="sigmoid", padding="SAME"))(y)
     decoder = K.Model(dec_in, y)
 
-    encoder.summary()
-    decoder.summary()
     out_encoder = encoder(enc_in)
     out_decoder = decoder(out_encoder)
 
