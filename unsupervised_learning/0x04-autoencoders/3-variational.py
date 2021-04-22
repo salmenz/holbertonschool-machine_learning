@@ -24,7 +24,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
         return z_mean + K.backend.exp(z_log_sigma / 2) * epsilon
 
     z = K.layers.Lambda(sampling)([z_mean, z_log_sigma])
-    encoder = K.Model(enc_in, [z_mean, z_log_sigma, z])
+    encoder = K.Model(enc_in, [z, z_mean, z_log_sigma])
 
     # decoder
     dec_in = K.Input(shape=(latent_dims,))
