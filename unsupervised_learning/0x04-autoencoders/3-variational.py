@@ -20,8 +20,8 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
         """new points sampling"""
         z_mean, z_log_sigma = args
         epsilon = K.backend.random_normal(shape=(K.backend.shape(z_mean)[0],
-                                          latent_dims), mean=0., stddev=0.1)
-        return z_mean + K.backend.exp(z_log_sigma) * epsilon
+                                          latent_dims))
+        return z_mean + K.backend.exp(z_log_sigma / 2) * epsilon
 
     z = K.layers.Lambda(sampling)([z_mean, z_log_sigma])
     encoder = K.Model(enc_in, [z_mean, z_log_sigma, z])
@@ -37,6 +37,9 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     decoder = K.Model(dec_in, y)
 
     # instantiate VAE model
+    outputs = decoder(encoder(enc_in))
+    vae = K.Model(enc_in, outputs)
+
     def loss(true, pred):
         """calculate loss"""
         reconstruction_loss = K.losses.binary_crossentropy(enc_in, outputs)
@@ -47,8 +50,5 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
         kl_loss *= -0.5
         return K.backend.mean(reconstruction_loss + kl_loss)
 
-    outputs = decoder(encoder(enc_in))
-    vae = K.Model(enc_in, outputs)
     vae.compile(optimizer='adam', loss=loss)
-
     return encoder, decoder, vae
