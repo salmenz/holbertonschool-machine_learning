@@ -37,9 +37,6 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     decoder = K.Model(dec_in, y)
 
     # instantiate VAE model
-    outputs = decoder(encoder(enc_in))
-    vae = K.Model(enc_in, outputs)
-
     def loss(true, pred):
         """calculate loss"""
         reconstruction_loss = K.losses.binary_crossentropy(enc_in, outputs)
@@ -49,6 +46,9 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
         kl_loss = K.backend.sum(kl_loss, axis=-1)
         kl_loss *= -0.5
         return K.backend.mean(reconstruction_loss + kl_loss)
+
+    outputs = decoder(encoder(enc_in))
+    vae = K.Model(enc_in, outputs)
     vae.compile(optimizer='adam', loss=loss)
 
     return encoder, decoder, vae
