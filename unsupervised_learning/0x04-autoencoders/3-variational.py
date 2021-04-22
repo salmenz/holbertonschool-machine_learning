@@ -20,7 +20,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
         """new points sampling"""
         z_mean, z_log_sigma = args
         epsilon = K.backend.random_normal(shape=(K.backend.shape(z_mean)[0],
-                                          latent_dims))
+                                          K.backend.int_shape(z_mean)[1]))
         return z_mean + K.backend.exp(z_log_sigma / 2) * epsilon
 
     z = K.layers.Lambda(sampling)([z_mean, z_log_sigma])
