@@ -17,6 +17,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     z_log_sigma = K.layers.Dense(latent_dims)(y)
 
     def sampling(args):
+        """new points sampling"""
         z_mean, z_log_sigma = args
         epsilon = K.backend.random_normal(shape=(K.backend.shape(z_mean)[0],
                                           latent_dims), mean=0., stddev=0.1)
@@ -40,6 +41,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
     vae = K.Model(enc_in, outputs)
 
     def loss(true, pred):
+        """calculate loss"""
         reconstruction_loss = K.losses.binary_crossentropy(enc_in, outputs)
         reconstruction_loss *= input_dims
         kl_loss = 1 + z_log_sigma - K.backend.square(z_mean) - \
