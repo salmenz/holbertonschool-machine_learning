@@ -4,7 +4,7 @@ import numpy as np
 
 
 def deep_rnn(rnn_cells, X, h_0):
-    """FN performs forward propagation for a deep RNN"""
+    """ FN performs forward propagation for a deep RNN"""
     t = X.shape[0]
     H = []
     H.append(h_0)
