@@ -16,6 +16,6 @@ class BidirectionalCell():
 
     def forward(self, h_prev, x_t):
         """represents a bidirectional cell of an RNN"""
-        conca = np.concatenate((h_prev, x_t), axis=1)
-        h_next = np.tanh(np.dot(conca, self.Whf) + self.bhf)
+        n = np.concatenate((h_prev, x_t), axis=1)
+        h_next = np.tanh(np.dot(n, self.Whf) + self.bhf)
         return h_next
