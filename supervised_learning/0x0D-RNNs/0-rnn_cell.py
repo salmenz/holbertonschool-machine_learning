@@ -3,7 +3,6 @@
 import numpy as np
 
 
-
 def softmax(x):
     """softmax function"""
     exp_scores = np.exp(x)
@@ -19,7 +18,7 @@ class RNNCell:
         self.by = np.zeros((1, o))
 
     def forward(self, h_prev, x_t):
-
+        """forward"""
         n = np.concatenate((h_prev, x_t), axis=1)
         h_next = np.tanh(np.dot(n, self.Wh) + self.bh)
         y = softmax(np.dot(h_next, self.Wy) + self.by)
