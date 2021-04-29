@@ -3,7 +3,6 @@
 import numpy as np
 
 
-
 def rnn(rnn_cell, X, h_0):
     """performs forward propagation for a simple RNN"""
     t = X.shape[0]
