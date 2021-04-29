@@ -19,7 +19,7 @@ class LSTMCell():
         self.by = np.zeros((1, o))
 
     def sigmoid(self, x):
-        """ Sigmoid fn """
+        """ Sigmoid function """
         sigmoid = 1 / (1 + np.exp(-x))
         return sigmoid
 
