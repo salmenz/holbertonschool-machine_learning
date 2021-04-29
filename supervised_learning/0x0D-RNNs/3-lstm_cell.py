@@ -38,5 +38,5 @@ class LSTMCell():
         s3_O = self.sigmoid(np.matmul(co, self.Wo) + self.bo)
         h_next = s3_O * np.tanh(fin_C)
         y = np.matmul(h_next, self.Wy) + self.by
-        y = self.predict_softmax(np.matmul(h_next, self.Wy) + self.by)
+        y = self.softmax(np.matmul(h_next, self.Wy) + self.by)
         return h_next, fin_C, y
