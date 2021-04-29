@@ -14,7 +14,7 @@ class RNNCell:
     def __init__(self, i, h, o):
         self.Wh = np.random.normal(size=(i+h, h))
         self.Wy = np.random.normal(size=(h, o))
-        self.bh = np.zeros((1, i))
+        self.bh = np.zeros((1, h))
         self.by = np.zeros((1, o))
 
     def forward(self, h_prev, x_t):
