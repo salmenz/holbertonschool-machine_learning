@@ -30,7 +30,7 @@ def ngram_bleu(references, sentence, n):
         if word not in added:
             sum_count_clip += count_clip
         added.append(word)
-    bp = np.exp(1 - closest_len / len(sentence))
+    bp = np.exp(1 - closest_len / len_sen)
     if len_sen > closest_len:
         bp = 1
     return bp * sum_count_clip / len_sen
