@@ -5,6 +5,13 @@ import numpy as np
 
 def uni_bleu(references, sentence):
     """calculates the unigram BLEU score for a sentence"""
+    c = len(sentence)
+    r = np.array([len(r) for r in references])
+    r = np.argmin(np.abs(r - c))
+    r = len(references[r])
+    bp = 1
+    if r > c:
+        bp = np.exp(1 - r / c)
     len_sen = len(sentence)
     min = max(len_sen, max(len(i) for i in references))
     sum_count_clip = 0
@@ -17,7 +24,4 @@ def uni_bleu(references, sentence):
                 min = abs(len(ref) - len_sen)
                 closest_len = len(ref)
         sum_count_clip += count_clip
-    bp = np.exp(1 - closest_len / len_sen)
-    if len_sen > closest_len:
-        bp = 1
     return bp * sum_count_clip / len_sen
