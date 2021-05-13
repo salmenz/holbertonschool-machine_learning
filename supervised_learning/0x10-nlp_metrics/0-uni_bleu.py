@@ -17,7 +17,15 @@ def uni_bleu(references, sentence):
                 min = abs(len(ref) - len_sen)
                 closest_len = len(ref)
         sum_count_clip += count_clip
+    words = {}
+    for word in sentence:
+        for ref in references:
+            if word in words:
+                if words[word] < ref.count(word):
+                    words.update({word: ref.count(word)})
+            else:
+                words.update({word: ref.count(word)})
     bp = np.exp(1 - closest_len / len_sen)
     if len_sen > closest_len:
         bp = 1
-    return bp * sum_count_clip / len_sen
+    return bp * sum(words.values()) / len_sen
