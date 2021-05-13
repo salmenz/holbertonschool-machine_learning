@@ -27,7 +27,7 @@ def ngram_bleu(references, sentence, n):
         for ref in N_references:
             if ref.count(word) > count_clip:
                 count_clip = ref.count(word)
-        if word in added:
+        if word not in added:
             sum_count_clip += count_clip
         added.append(word)
     bp = np.exp(1 - closest_len / len(sentence))
