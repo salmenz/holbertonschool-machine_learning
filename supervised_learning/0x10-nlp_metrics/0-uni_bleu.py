@@ -8,6 +8,7 @@ def uni_bleu(references, sentence):
     len_sen = len(sentence)
     min = len(sentence)
     sum_count_clip = 0
+    closest_len = 0
     for word in sentence:
         count_clip = 0
         for ref in references:
