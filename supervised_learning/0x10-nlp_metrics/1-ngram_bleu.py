@@ -22,9 +22,9 @@ def ngram_bleu(references, sentence, n):
             closest_len = len(ref)
     sum_count_clip = 0
     for word in N_sentence:
-        added = []
         count_clip = 0
         for ref in N_references:
+            added = []
             if ref.count(word) > count_clip:
                 count_clip = ref.count(word)
         if word not in added:
