@@ -15,7 +15,7 @@ def ngram_bleu(references, sentence, n):
     for ref in references:
         N_references.append(new_list(ref, n))
     len_sen = len(N_sentence)
-    min = max(len(sentence), max(len(i) for i in references))
+    min = len(N_sentence)
     for ref in references:
         if abs(len(ref) - len_sen) < min:
             min = abs(len(ref) - len_sen)
@@ -24,13 +24,10 @@ def ngram_bleu(references, sentence, n):
     for word in N_sentence:
         count_clip = 0
         for ref in N_references:
-            added = []
             if ref.count(word) > count_clip:
                 count_clip = ref.count(word)
-        if word not in added:
-            sum_count_clip += count_clip
-        added.append(word)
-    bp = np.exp(1 - closest_len / len_sen)
+        sum_count_clip += count_clip
+    bp = np.exp(1 - closest_len / len(sentence))
     if len_sen > closest_len:
         bp = 1
-    return bp * sum_count_clip / len_sen
+    return bp * np.exp(np.log(sum_count_clip / len_sen))
