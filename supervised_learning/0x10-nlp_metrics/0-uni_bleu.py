@@ -18,6 +18,6 @@ def uni_bleu(references, sentence):
                 closest_len = len(ref)
         sum_count_clip += count_clip
     bp = 1
-    if len_sen > closest_len:
+    if closest_len > len_sen:
         bp = np.exp(1 - closest_len / len_sen)
     return bp * sum_count_clip / len_sen
