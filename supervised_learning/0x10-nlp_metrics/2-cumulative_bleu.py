@@ -18,12 +18,15 @@ def cumulative_bleu(references, sentence, n):
             N_references.append(new_list(ref, i))
         len_sen = len(N_sentence)
         sum_count_clip = 0
+        added = []
         for word in N_sentence:
             count_clip = 0
             for ref in N_references:
                 if ref.count(word) > count_clip:
                     count_clip = ref.count(word)
-            sum_count_clip += count_clip
+            if word not in added:
+                sum_count_clip += count_clip
+                added.append(word)
         ngrams.append(sum_count_clip/len_sen)
     ngrams = np.array(ngrams)
     min = max(len(sentence), max(len(i) for i in references))
