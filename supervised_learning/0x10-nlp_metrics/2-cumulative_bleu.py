@@ -28,8 +28,8 @@ def cumulative_bleu(references, sentence, n):
     ngrams = np.array(ngrams)
     min = max(len(sentence), max(len(i) for i in references))
     for ref in references:
-        if abs(len(ref) - len_sen) < min:
-            min = abs(len(ref) - len_sen)
+        if abs(len(ref) - len(sentence)) < min:
+            min = abs(len(ref) - len(sentence))
             closest_len = len(ref)
     bp = np.exp(1 - closest_len / len(sentence))
     if len_sen >= closest_len:
