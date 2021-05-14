@@ -32,6 +32,6 @@ def cumulative_bleu(references, sentence, n):
             min = abs(len(ref) - len_sen)
             closest_len = len(ref)
     bp = np.exp(1 - closest_len / len(sentence))
-    if len_sen > closest_len:
+    if len_sen >= closest_len:
         bp = 1
     return bp * np.exp(np.sum((1 / n) * np.log(ngrams)))
