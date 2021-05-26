@@ -10,8 +10,8 @@ class RNNEncoder(tf.keras.layers.Layer):
         super(RNNEncoder, self).__init__()
         self.batch = batch
         self.units = units
-        self.embedding = tf.keras.layers.Embedding(output_dim=embedding,
-                                                   input_dim=vocab)
+        self.embedding = tf.keras.layers.Embedding(input_dim=vocab,
+                                                   output_dim=embedding)
         self.gru = tf.keras.layers.GRU(units=units, return_sequences=True,
                                        kernel_initializer="glorot_uniform",
                                        return_state=True)
