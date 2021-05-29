@@ -24,8 +24,8 @@ class Dataset:
 
     def encode(self, pt, en):
         """encodes a translation into tokens"""
-        p = self.tokenizer_pt.vocab_size
-        e = self.tokenizer_en.vocab_size
-        pt_tokens = [p] + self.tokenizer_pt.encode(pt.numpy()) + [p + 1]
-        en_tokens = [e] + self.tokenizer_pt.encode(en.numpy()) + [e + 1]
-        return pt_tokens, en_tokens
+        tok_pt = [self.tokenizer_pt.vocab_size]+self.tokenizer_pt.encode(
+            pt.numpy())+[(self.tokenizer_pt.vocab_size) + 1]
+        tok_en = [self.tokenizer_en.vocab_size]+self.tokenizer_en.encode(
+            en.numpy())+[(self.tokenizer_en.vocab_size) + 1]
+        return tok_pt, tok_en
