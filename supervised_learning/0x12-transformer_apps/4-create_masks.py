@@ -18,11 +18,13 @@ def create_masks(inputs, target):
     decoder_mask = decoder_mask[:, tf.newaxis, tf.newaxis, :]
 
     # the look ahead mask
-    look_ahead_mask = 1 - tf.linalg.band_part(tf.ones((seq_len_out, seq_len_out)), -1, 0)
+    look_ahead_mask = 1 - tf.linalg.band_part(tf.ones((
+        seq_len_out, seq_len_out)), -1, 0)
 
     #  the decoder target padding mask.
     dec_target_padding_mask = tf.cast(tf.math.equal(target, 0), tf.float32)
-    dec_target_padding_mask = dec_target_padding_mask[:, tf.newaxis, tf.newaxis, :]
+    dec_target_padding_mask = dec_target_padding_mask[
+        :, tf.newaxis, tf.newaxis, :]
     # combined_mask
     combined_mask = tf.maximum(dec_target_padding_mask, look_ahead_mask)
 
