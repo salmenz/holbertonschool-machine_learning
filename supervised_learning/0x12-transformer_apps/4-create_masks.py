@@ -12,7 +12,7 @@ def create_masks(inputs, target):
     # the encoder mask
     encoder_mask = tf.cast(tf.math.equal(inputs, 0), tf.float32)
     encoder_mask = encoder_mask[:, tf.newaxis, tf.newaxis, :]
-    
+
     # the decoder mask
     decoder_mask = tf.cast(tf.math.equal(inputs, 0), tf.float32)
     decoder_mask = decoder_mask[:, tf.newaxis, tf.newaxis, :]
