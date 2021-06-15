@@ -18,7 +18,7 @@ class RNNDecoder(tf.keras.Model):
 
     def call(self, x, s_prev, hidden_states):
         """call function"""
-        context_v = self.attention(s_prev, hidden_states)[0]
+        context_v = self.attention(s_prev, hidden_states)
         context_v = tf.expand_dims(context_v, 1)
         x = self.embedding(x)
         x = tf.concat([context_v, x], axis=-1)
