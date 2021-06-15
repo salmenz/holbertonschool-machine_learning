@@ -4,7 +4,7 @@ import tensorflow as tf
 SelfAttention = __import__('1-self_attention').SelfAttention
 
 
-class RNNDecoder(tf.keras.Model):
+class RNNDecoder(tf.keras.layers.Layer):
     """class RNNDecoder"""
     def __init__(self, vocab, embedding, units, batch):
         """class constructor"""
@@ -18,10 +18,11 @@ class RNNDecoder(tf.keras.Model):
 
     def call(self, x, s_prev, hidden_states):
         """call function"""
-        cn = self.attention(s_prev, hidden_states)
+        context_v = self.attention(s_prev, hidden_states)[0]
+        context_v = tf.expand_dims(context_v, 1)
         x = self.embedding(x)
-        x = tf.concat([tf.expand_dims(cn, 1), x], axis=-1)
-        output, s = self.gru(x)
+        x = tf.concat([context_v, x], axis=-1)
+        output, state = self.gru(x)
         output = tf.reshape(output, (-1, output.shape[2]))
-        y = self.F(output)
-        return y, s
+        x = self.F(output)
+        return x, state
