@@ -26,9 +26,12 @@ class MultiHeadAttention(tf.keras.layers.Layer):
     def call(self, Q, K, V, mask):
         """call function"""
         batch_size = tf.shape(Q)[0]
-        q = self.splitt(self.Wq(Q), batch_size)
-        k = self.splitt(self.Wk(K), batch_size)
-        v = self.splitt(self.Wv(V), batch_size)
+        q = self.Wq(Q)
+        k = self.Wk(K)
+        v = self.Wv(V)
+        q = self.splitt(q, batch_size)
+        k = self.splitt(k, batch_size)
+        v = self.splitt(v, batch_size)
         scaled_attention, attention_weights = sdp_attention(q, k, v, mask)
 
         scaled_attention = tf.transpose(scaled_attention, perm=[0, 2, 1, 3])
