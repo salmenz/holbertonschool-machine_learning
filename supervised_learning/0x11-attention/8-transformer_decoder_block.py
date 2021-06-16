@@ -27,7 +27,7 @@ class DecoderBlock(tf.keras.layers.Layer):
         att = self.dropout1(att, training=training)
         output = self.layernorm1(att + x)
         att2, att_weights_block2 = self.mha2(output, encoder_output,
-                                            encoder_output, padding_mask)
+                                             encoder_output, padding_mask)
         att2 = self.dropout2(att2, training=training)
         out2 = self.layernorm2(att2 + output)
         out = self.dense_hidden(out2)
