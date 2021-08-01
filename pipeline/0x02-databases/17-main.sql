@@ -1,9 +1,12 @@
--- trigger that decreases the quantity of an item after adding a new order
+-- Show and add orders
+SELECT * FROM items;
+SELECT * FROM orders;
 
-CREATE TRIGGER update_items
-  AFTER INSERT
-  ON orders
-  FOR EACH ROW
-BEGIN
-  UPDATE items SET quantity = quantity - new.number WHERE items.name=new.item_name;  
-END
+INSERT INTO orders (item_name, number) VALUES ('apple', 1);
+INSERT INTO orders (item_name, number) VALUES ('apple', 3);
+INSERT INTO orders (item_name, number) VALUES ('pear', 2);
+
+SELECT "--";
+
+SELECT * FROM items;
+SELECT * FROM orders;
