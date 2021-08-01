@@ -2,7 +2,7 @@
 -- metal_bands(id, band_name, fans, formed, origin, split, style)
 
 SELECT band_name, IF(split IS NULL,
-    (YEAR(NOW()) - formed),
+    (2021 - formed),
     split - formed) AS lifespan
     FROM metal_bands WHERE style LIKE '%Glam Rock%'
     ORDER BY lifespan DESC;
