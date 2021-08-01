@@ -5,7 +5,6 @@ CREATE TRIGGER update_items
   AFTER INSERT
   ON orders
   FOR EACH ROW
-  -- test
 BEGIN
   UPDATE items SET quantity = quantity - new.number WHERE items.name=new.item_name;  
 END//
