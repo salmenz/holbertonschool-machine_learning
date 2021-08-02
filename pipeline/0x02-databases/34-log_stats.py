@@ -8,8 +8,8 @@ if __name__ == "__main__":
 
     client = MongoClient('mongodb://127.0.0.1:27017')
     logs = client.logs.nginx
-    count_documents = logs.count_documents({})
-    print('{} logs'.format(count_documents))
+    count_document = logs.count_documents({})
+    print('{} logs'.format(count_document))
     print('Methods:')
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     for m in methods:
