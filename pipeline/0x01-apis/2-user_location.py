@@ -6,6 +6,7 @@ import time
 
 
 if __name__ == '__main__':
+    """script that prints the location of a specific user"""
     r = requests.get(sys.argv[1])
 
     if r.status_code == 404:
